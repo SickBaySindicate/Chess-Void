@@ -6,7 +6,8 @@ project(ChessVoid LANGUAGES CXX)
 # Set C++ standard (C++20 in this case for compatibility)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_EXE_LINKER_FLAGS "-static")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+set(CMAKE_EXE_LINKER_FLAGS "-static -static-libgcc -static-libstdc++")
 
 # Error if building out of a build directory
 file(TO_CMAKE_PATH "${PROJECT_BINARY_DIR}/CMakeLists.txt" LOC_PATH)
