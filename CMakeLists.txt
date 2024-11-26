@@ -58,6 +58,13 @@ else()
     message(STATUS "Using system Catch2")
 endif ()
 
+FetchContent_Declare(
+        libchess
+        GIT_REPOSITORY https://github.com/kz04px/libchess.git
+        GIT_TAG        master
+)
+FetchContent_MakeAvailable(libchess)
+
 # Collect all source files recursively
 file(GLOB_RECURSE SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 file(GLOB_RECURSE TST_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/test_*.cpp")
@@ -69,15 +76,16 @@ list(FILTER SRC_FILES EXCLUDE REGEX ".*/test_.*\\.cpp$")
 add_executable(chess_void src/main.cpp ${SRC_FILES})
 
 # Link ftxui library
-target_include_directories(chess_void PRIVATE "${ftxui_SOURCE_DIR}/include")
+target_include_directories(chess_void PRIVATE "${ftxui_SOURCE_DIR}/include" "${libchess_SOURCE_DIR}/src")
 target_link_libraries(
         chess_void
         PRIVATE ftxui::screen
         PRIVATE ftxui::dom
         PRIVATE ftxui::component
+        PRIVATE libchess_static
 )
 
-# Create the test executable
-add_executable(tests ${SRC_FILES} ${TST_FILES})
-target_include_directories(tests PRIVATE "${ftxui_SOURCE_DIR}/include")
-target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
+## Create the test executable
+#add_executable(tests ${SRC_FILES} ${TST_FILES})
+#target_include_directories(tests PRIVATE "${ftxui_SOURCE_DIR}/include")
+#target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
