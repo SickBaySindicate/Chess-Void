@@ -71,7 +71,7 @@ public:
     }
 
     [[nodiscard]] constexpr Bitboard occupied() const noexcept {
-        return occupancy(Side::White) | occupancy(Side::Black);
+        return occupancy(Side::White) | occupancy(Side::Black) | blank_;
     }
 
     [[nodiscard]] constexpr Bitboard blanks() const noexcept {
